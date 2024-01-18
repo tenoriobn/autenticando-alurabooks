@@ -7,6 +7,10 @@
 .corpoModalCadastro form {
     width: 500px;
     max-width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
 }
 
 .corpoModalCadastro form .acoes {
