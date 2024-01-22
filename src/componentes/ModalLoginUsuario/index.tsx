@@ -4,6 +4,7 @@ import { useState } from "react"
 import imagemPrincipal from './assets/login.png'
 
 import './ModalLoginUsuario.css'
+import axios from "axios"
 
 interface PropsModalLoginUsuario {
     aberta: boolean
@@ -21,7 +22,20 @@ const ModalLoginUsuario = ({ aberta, aoFechar } : PropsModalLoginUsuario) => {
             email,
             senha,
         }
-        console.log(usuario)
+        axios.post('http://localhost:8000/public/login', usuario)
+            .then(resposta => {
+                sessionStorage.setItem('token', resposta.data.access_token)
+                setEmail('')
+                setSenha('')
+                aoFechar();
+            })
+            .catch(erro => {
+                if (erro?.response?.data?.message) {
+                    alert(erro.response.data.message)
+                } else {
+                    alert('Aconteceu um erro inesperado ao efetuar o seu login! Entre em contato com o suporte!')
+                }
+            })
     }
 
     return (<AbModal 
