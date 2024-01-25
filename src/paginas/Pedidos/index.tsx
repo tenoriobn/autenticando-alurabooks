@@ -1,8 +1,8 @@
 import { AbBotao } from "ds-alurabooks";
-import axios from "axios";
-import './Pedidos.css';
 import { useEffect, useState } from "react";
 import { IPedido } from "../../interfaces/IPedido";
+import http from "../../http";
+import './Pedidos.css';
 
 const Pedidos = () => {
   const [pedidos, setPedidos] = useState<IPedido[]>([]);
@@ -11,7 +11,7 @@ const Pedidos = () => {
   useEffect(() => {
     const token = sessionStorage.getItem('token');
 
-    axios.get<IPedido[]>('http://localhost:8000/pedidos', {
+    http.get<IPedido[]>('http://localhost:8000/pedidos', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -21,7 +21,7 @@ const Pedidos = () => {
 
   const excluir = (pedido: IPedido) => {
     const token = sessionStorage.getItem('token')
-    axios.delete('http://localhost:8000/pedidos/' + pedido.id, {
+    http.delete('http://localhost:8000/pedidos/' + pedido.id, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -42,8 +42,8 @@ const Pedidos = () => {
             <li>Valor total: <strong>{formatador.format(pedido.total)}</strong></li>
             <li>Entrega realizada em: <strong>{new Date(pedido.entrega).toLocaleDateString()}</strong></li>
             <li>
-                    <button onClick={() => excluir(pedido)}>Excluir</button>
-                </li>
+              <button onClick={() => excluir(pedido)}>Excluir</button>
+            </li>
           </ul>
           <AbBotao texto="Detalhes" />
         </div>

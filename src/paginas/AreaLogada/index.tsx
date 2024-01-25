@@ -9,7 +9,7 @@ const AreaLogada = () => {
             <div className="menu">
                 <ul className="navegacao">
                     <li>
-                        <Link to="/area-logada/pedidos">Pedidos</Link>
+                        <Link to="pedidos">Pedidos</Link>
                     </li>
                     <li>
                         <Link to="/area-logada/trocas">Trocas</Link>
