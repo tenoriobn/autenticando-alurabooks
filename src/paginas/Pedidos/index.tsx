@@ -9,26 +9,17 @@ const Pedidos = () => {
   const formatador = Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' });
 
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
-
-    http.get<IPedido[]>('http://localhost:8000/pedidos', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    }).then(resposta => setPedidos(resposta.data))
-    .catch(erro => console.log(erro))
+    http.get<IPedido[]>('pedidos')
+      .then(resposta => setPedidos(resposta.data))
+      .catch(erro => console.log(erro))
   }, []);
 
   const excluir = (pedido: IPedido) => {
-    const token = sessionStorage.getItem('token')
-    http.delete('http://localhost:8000/pedidos/' + pedido.id, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }).then(() => {
-        setPedidos(pedidos.filter(p => p.id !== pedido.id))
-    })
-    .catch(erro => console.log(erro))
+    http.delete('pedidos' + pedido.id)
+      .then(() => {
+          setPedidos(pedidos.filter(p => p.id !== pedido.id))
+      })
+      .catch(erro => console.log(erro))
 }
 
   return (
